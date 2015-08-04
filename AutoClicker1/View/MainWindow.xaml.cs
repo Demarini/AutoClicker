@@ -25,6 +25,7 @@ namespace AutoClicker1
         public MainWindow()
         {
             InitializeComponent();
+            
             this.DataContext = new MainWindowViewModel();
         }
 

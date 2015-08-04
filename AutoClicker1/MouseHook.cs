@@ -16,8 +16,6 @@ namespace AutoClicker1
         public static void Start()
         {
             _hookID = SetHook(_proc);
-
-
         }
         public static void stop()
         {

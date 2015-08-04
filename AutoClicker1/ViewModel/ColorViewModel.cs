@@ -17,6 +17,9 @@ namespace AutoClicker1.ViewModel
         private List<ListBoxBinder> listBind = new List<ListBoxBinder>();
         ColorService colorService;
         ColorModel colorModel;
+        public string bindText;
+        public string editText = "Edit Bind";
+        public bool isEnabled = false;
         public ColorViewModel()
         {
             colorModel = new ColorModel(this);
@@ -28,7 +31,40 @@ namespace AutoClicker1.ViewModel
             {
                 return new RelayCommand(() =>
                 {
-                    colorService.SelectColor();
+                    MouseHook.Start();
+                    MouseHook.MouseAction += new EventHandler(Event);
+                });
+            }
+        }
+        public ICommand EditBind
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    if (colorService.CheckEditValues())
+                    {
+                        KeyboardHook.UnsetHook();
+                    }
+                    else
+                    {
+                        KeyboardHook.SetHook();
+                        KeyboardHook.KeyAction += new EventHandler(Event2);
+                    }
+                });
+            }
+        }
+        private void Event(object sender, EventArgs e)
+        {
+            colorService.SelectColor();
+        }
+        public ICommand KeyPressed
+        {
+            get
+            {
+                return new RelayCommand<KeyEventArgs>(e =>
+                {
+                    
                 });
             }
         }
@@ -42,6 +78,47 @@ namespace AutoClicker1.ViewModel
             {
                 listBind = value;
                 OnPropertyChanged("ListBind");
+            }
+        }
+        private void Event2(object sender, EventArgs e)
+        {
+            colorService.CheckKeyPress();
+        }
+        public string BindText
+        {
+            get
+            {
+                return bindText;
+            }
+            set
+            {
+                bindText = value;
+                colorModel.BindText = bindText;
+                OnPropertyChanged("BindText");
+            }
+        }
+        public bool IsEnabled
+        {
+            get
+            {
+                return isEnabled;
+            }
+            set
+            {
+                isEnabled = value;
+                OnPropertyChanged("IsEnabled");
+            }
+        }
+        public string EditText
+        {
+            get
+            {
+                return editText;
+            }
+            set
+            {
+                editText = value;
+                OnPropertyChanged("EditText");
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;

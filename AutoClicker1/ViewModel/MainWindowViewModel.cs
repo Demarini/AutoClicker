@@ -69,7 +69,7 @@ namespace AutoClicker1.ViewModel
                 return clickedView;
             }
             set
-            {
+             {
                 clickedView = value;
                 OnPropertyChanged("ClickedView");
             }

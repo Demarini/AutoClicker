@@ -12,6 +12,9 @@ namespace AutoClicker1.Model
     {
         ColorViewModel colorViewModel;
         private List<ListBoxBinder> listBind = new List<ListBoxBinder>();
+        public string bindText;
+        public string editText = "Edit Bind";
+        public bool isEnabled = false;
         public ColorModel(ColorViewModel colorViewModel)
         {
             this.colorViewModel = colorViewModel;
@@ -26,6 +29,42 @@ namespace AutoClicker1.Model
             {
                 listBind = value;
                 colorViewModel.ListBind = listBind;
+            }
+        }
+        public bool IsEnabled
+        {
+            get
+            {
+                return isEnabled;
+            }
+            set
+            {
+                isEnabled = value;
+                colorViewModel.IsEnabled = isEnabled;
+            }
+        }
+        public string EditText
+        {
+            get
+            {
+                return editText;
+            }
+            set
+            {
+                editText = value;
+                colorViewModel.EditText = editText;
+            }
+        }
+        public string BindText
+        {
+            get
+            {
+                return bindText;
+            }
+            set
+            {
+                bindText = value;
+                //colorViewModel.BindText = bindText;
             }
         }
     }

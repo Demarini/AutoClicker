@@ -13,13 +13,13 @@ C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1
 C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\obj\Debug\AutoClicker1_MarkupCompile.lref
 C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\bin\Debug\AutoClicker1.exe
 C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\bin\Debug\AutoClicker1.pdb
-C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\bin\Debug\GalaSoft.MvvmLight.Extras.WPF45.dll
-C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\bin\Debug\GalaSoft.MvvmLight.WPF45.dll
 C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\bin\Debug\Microsoft.Practices.ServiceLocation.dll
 C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\bin\Debug\System.Windows.Interactivity.dll
 C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\bin\Debug\Microsoft.Practices.ServiceLocation.xml
-C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\bin\Debug\System.Windows.Interactivity.xml
 C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\obj\Debug\View\MainWindow.baml
 C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\obj\Debug\AutoClicker1.g.resources
 C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\obj\Debug\AutoClicker1.exe
 C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\obj\Debug\AutoClicker1.pdb
+C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\bin\Debug\GalaSoft.MvvmLight.Extras.WPF45.dll
+C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\bin\Debug\GalaSoft.MvvmLight.WPF45.dll
+C:\Users\tlmarin\Documents\Visual Studio 2013\Projects\AutoClicker1\AutoClicker1\bin\Debug\System.Windows.Interactivity.xml

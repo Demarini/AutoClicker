@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -14,21 +15,24 @@ namespace AutoClicker1.Service
 {
     public class ColorService
     {
-        
+        Thread myThread;
+        bool killThread = false;
+        bool threadStarted = false;
+        bool _shouldStop;
         private ColorViewModel colorViewModel;
         ColorModel colorModel;
         public ColorService(ColorViewModel colorViewModel, ColorModel colorModel)
         {
+            
             this.colorViewModel = colorViewModel;
             this.colorModel = colorModel;
         }
         
         public void SelectColor()
         {
-            MouseHook.Start();
-            MouseHook.MouseAction += new EventHandler(Event);
+            SetListBoxColor();
         }
-        private void Event(object sender, EventArgs e)
+        public void SetListBoxColor()
         {
             bool canAdd = true;
             MouseHook.stop();
@@ -52,6 +56,7 @@ namespace AutoClicker1.Service
             colorViewModel.ListBind = null;
             colorModel.ListBind = colorModel.ListBind;
         }
+        
         static public System.Drawing.Color GetPixelColor(int x, int y)
         {
             IntPtr hdc = GetDC(IntPtr.Zero);
@@ -62,6 +67,58 @@ namespace AutoClicker1.Service
                          (int)(pixel & 0x00FF0000) >> 16);
             return color;
         }
+        public void CheckKeyPress()
+        {
+            if ((colorModel.BindText.ToUpper() == KeyboardHook.KeyPressed.ToUpper()) && !threadStarted)
+            {
+                colorModel.EditText = "YOLO";
+                StartClicking();
+            }
+            else if (KeyboardHook.KeyPressed.ToUpper() == "KEYDOWN")
+            {
+            }
+            else
+            {
+                killThread = true;
+                colorModel.EditText = "NOYOLO";
+            }
+        }
+        public bool CheckEditValues()
+        {
+            if (colorModel.EditText == "Lock Bind")
+            {
+                colorModel.EditText = "Edit Text";
+                colorModel.IsEnabled = false;
+                return false;
+            }
+            else
+            {
+                colorModel.EditText = "Lock Bind";
+                colorModel.IsEnabled = true;
+                return true;
+            }
+        }
+        public void StartClicking()
+        {
+            threadStarted = true;
+            myThread = new System.Threading.Thread(delegate()
+            {
+                
+                while (!killThread)
+                {
+                    CheckClickRequirement();
+                }
+                killThread = false;
+                threadStarted = false;
+                //colorModel.EditText = "SWAG";
+            });
+            myThread.Start();
+        }
+        public void CheckClickRequirement()
+        {
+            
+        }
+
 
         [DllImport("gdi32.dll", SetLastError = true)]
         public static extern uint GetPixel(IntPtr dc, int x, int y);
