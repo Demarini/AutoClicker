@@ -67,9 +67,11 @@
     <Compile Include="KeyboardHook.cs" />
     <Compile Include="ListBoxBinder.cs" />
     <Compile Include="Model\ColorModel.cs" />
+    <Compile Include="Model\CoordinatesModel.cs" />
     <Compile Include="MouseHook.cs" />
     <Compile Include="MouseOperations.cs" />
     <Compile Include="Service\ColorService.cs" />
+    <Compile Include="Service\CoordinatesService.cs" />
     <Compile Include="ViewModel\ColorViewModel.cs" />
     <Compile Include="ViewModel\CoordinatesViewModel.cs" />
     <Compile Include="ViewModel\MousePositionViewModel.cs" />

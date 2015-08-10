@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoClicker1.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,9 @@ namespace AutoClicker1.View
     {
         public CoordinatesView()
         {
+            this.DataContext = new CoordinatesViewModel();
             InitializeComponent();
+            
         }
     }
 }

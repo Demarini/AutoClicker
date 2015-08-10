@@ -23,8 +23,9 @@ namespace AutoClicker1.View
     {
         public ColorView()
         {
-            InitializeComponent();
             this.DataContext = new ColorViewModel();
+            InitializeComponent();
+            
         }
     }
 }

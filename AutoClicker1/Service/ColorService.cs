@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace AutoClicker1.Service
 {
@@ -71,8 +72,10 @@ namespace AutoClicker1.Service
         {
             if ((colorModel.BindText.ToUpper() == KeyboardHook.KeyPressed.ToUpper()) && !threadStarted)
             {
+                killThread = false;
                 colorModel.EditText = "YOLO";
                 StartClicking();
+                
             }
             else if (KeyboardHook.KeyPressed.ToUpper() == "KEYDOWN")
             {
@@ -80,6 +83,8 @@ namespace AutoClicker1.Service
             else
             {
                 killThread = true;
+                threadStarted = false;
+                myThread.Abort();
                 colorModel.EditText = "NOYOLO";
             }
         }
@@ -101,22 +106,49 @@ namespace AutoClicker1.Service
         public void StartClicking()
         {
             threadStarted = true;
+            List<ListBoxBinder> ls2 = new List<ListBoxBinder>();
+            foreach (ListBoxBinder ls in colorModel.ListBind)
+            {
+                ListBoxBinder ls3 = new ListBoxBinder();
+                ls3.Background = ls.Background;
+                ls3.Foreground = ls.Foreground;
+                ls3.Content = ls.Content;
+                ls3.ListBoxBinders = ls.ListBoxBinders;
+                ls2.Add(ls3);
+            }
+            //Application.Current.Dispatcher.Invoke((Action)(() =>
+            //{
+            //    CheckClickRequirement(ls2);
+            //}));
+            //Application.Current.Dispatcher.Invoke(new Action(() => { CheckClickRequirement(ls2); }), DispatcherPriority.ContextIdle, null);
+            
             myThread = new System.Threading.Thread(delegate()
             {
-                
+
                 while (!killThread)
                 {
-                    CheckClickRequirement();
+                    CheckClickRequirement(ls2);
                 }
                 killThread = false;
                 threadStarted = false;
                 //colorModel.EditText = "SWAG";
             });
+            myThread.IsBackground = true;
             myThread.Start();
         }
-        public void CheckClickRequirement()
+        public void CheckClickRequirement(List<ListBoxBinder> ls2)
         {
-            
+                foreach (ListBoxBinder ls in ls2)
+                {
+                    System.Drawing.Point p = MouseHook.GetCursorPosition();
+                    System.Drawing.Color c = GetPixelColor(p.X, p.Y);
+                    System.Windows.Media.Color newColor = System.Windows.Media.Color.FromArgb(c.A, c.R, c.G, c.B);
+                    if (ls.Content == newColor.ToString())
+                    {
+                        MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftDown);
+                        MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp);
+                    }
+                }
         }
 
 

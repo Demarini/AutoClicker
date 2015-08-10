@@ -15,10 +15,12 @@ namespace AutoClicker1.Model
         public string bindText;
         public string editText = "Edit Bind";
         public bool isEnabled = false;
+        private string spanValue;
         public ColorModel(ColorViewModel colorViewModel)
         {
             this.colorViewModel = colorViewModel;
         }
+        
         public List<ListBoxBinder> ListBind
         {
             get

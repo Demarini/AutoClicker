@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestClick
+namespace AutoClicker1
 {
     public class MouseOperations
     {
@@ -59,6 +59,16 @@ namespace TestClick
                 ((int)value,
                  position.X,
                  position.Y,
+                 0,
+                 0)
+                ;
+        }
+        public static void MouseEvent(MouseEventFlags value, int x, int y)
+        {
+            mouse_event
+                ((int)value,
+                 x,
+                 y,
                  0,
                  0)
                 ;

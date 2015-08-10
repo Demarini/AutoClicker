@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -50,6 +51,15 @@ namespace AutoClicker1
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
 
+        public static Point GetCursorPosition()
+        {
+            POINT lpPoint;
+            GetCursorPos(out lpPoint);
+            //bool success = User32.GetCursorPos(out lpPoint);
+            // if (!success)
+
+            return lpPoint;
+        }
         private const int WH_MOUSE_LL = 14;
 
         private enum MouseMessages
@@ -67,6 +77,11 @@ namespace AutoClicker1
         {
             public int x;
             public int y;
+
+            public static implicit operator Point(POINT point)
+            {
+                return new Point(point.x, point.y);
+            }
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -93,5 +108,8 @@ namespace AutoClicker1
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        [DllImport("user32.dll")]
+        public static extern bool GetCursorPos(out POINT lpPoint);
     }
 }
