@@ -50,7 +50,7 @@ namespace AutoClicker1
             if (!gotPoint) { currentMousePoint = new MousePoint(0, 0); }
             return currentMousePoint;
         }
-
+        
         public static void MouseEvent(MouseEventFlags value)
         {
             MousePoint position = GetCursorPosition();

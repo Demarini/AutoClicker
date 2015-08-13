@@ -7,16 +7,16 @@
              d:DesignHeight="360" d:DesignWidth="950">
     <Grid>
         <TextBlock HorizontalAlignment="Center" Margin="0,50,0,0" Text="This page will minimize upon your start/stop bind being pressed."></TextBlock>
-        <TextBox Width="50" Height="20" HorizontalAlignment="Center" Margin="0,0,0,50"></TextBox>
+        <TextBox Width="50" Height="20" HorizontalAlignment="Center" Margin="0,0,0,50" Text="{Binding SpanValue, Mode=TwoWay}"></TextBox>
         <TextBlock Text="Click every" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,125,50"></TextBlock>
-        <ComboBox Width="100" Height="20" Margin="175,0,0,50">
+        <ComboBox Width="100" Height="20" Margin="175,0,0,50" HorizontalAlignment="Center" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
             <ComboBoxItem Content="Second"></ComboBoxItem>
             <ComboBoxItem Content="Millisecond"></ComboBoxItem>
             <ComboBoxItem Content="Minute"></ComboBoxItem>
             <ComboBoxItem Content="Hour"></ComboBoxItem>
         </ComboBox>
-        <TextBox Height="20" Width="20" MaxLength="1" IsEnabled="{Binding BindEnabled}" Margin="0,50,0,0"></TextBox>
+        <TextBox Height="20" Width="20" MaxLength="1" Margin="0,50,0,0" IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Text="{Binding BindText, Mode=TwoWay}"></TextBox>
         <TextBlock Text="Start/Stop Bind" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,125,0"></TextBlock>
-        <Button Width="100" Height="20" Content="Edit Bind" Margin="175,50,0,0"></Button>
+        <Button HorizontalAlignment="Center" Width="100" Height="20" Content="{Binding EditText}" Margin="175,50,0,0" Command="{Binding EditBind}"></Button>
     </Grid>
 </UserControl>

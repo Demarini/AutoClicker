@@ -10,24 +10,39 @@ using System.Threading.Tasks;
 
 namespace AutoClicker1.Service
 {
-    public class CoordinatesService
+    class MousePositionService
     {
         Thread myThread;
         bool killThread = false;
         bool threadStarted = false;
-        public CoordinatesViewModel coordinatesViewModel;
-        public CoordinatesModel coordinatesModel;
-        public CoordinatesService(CoordinatesViewModel coordinatesViewModel, CoordinatesModel coordinatesModel)
-        {
+        public MousePositionViewModel mousePositionViewModel;
+        public MousePositionModel mousePositionModel;
 
-            this.coordinatesViewModel = coordinatesViewModel;
-            this.coordinatesModel = coordinatesModel;
+        public MousePositionService(MousePositionViewModel mousePositionViewModel, MousePositionModel mousePositionModel)
+        {
+            this.mousePositionModel = mousePositionModel;
+            this.mousePositionViewModel = mousePositionViewModel;
+        }
+        public bool CheckEditValues()
+        {
+            if (mousePositionModel.EditText == "Lock Bind")
+            {
+                mousePositionModel.EditText = "Edit Text";
+                mousePositionModel.IsEnabled = false;
+                return false;
+            }
+            else
+            {
+                mousePositionModel.EditText = "Lock Bind";
+                mousePositionModel.IsEnabled = true;
+                return true;
+            }
         }
         public void CheckKeyPress()
         {
-            if ((coordinatesModel.BindText.ToUpper() == KeyboardHook.KeyPressed.ToUpper()) && !threadStarted)
+            if ((mousePositionModel.BindText.ToUpper() == KeyboardHook.KeyPressed.ToUpper()) && !threadStarted)
             {
-                coordinatesModel.EditText = "111Text";
+                mousePositionModel.EditText = "111Text";
                 StartClicking();
             }
             else if (KeyboardHook.KeyPressed.ToUpper() == "KEYDOWN")
@@ -35,7 +50,7 @@ namespace AutoClicker1.Service
             }
             else
             {
-                coordinatesModel.EditText = "asdft";
+                mousePositionModel.EditText = "asdft";
                 killThread = true;
             }
         }
@@ -58,7 +73,7 @@ namespace AutoClicker1.Service
         {
             threadStarted = true;
             double milliSpan = 0;
-            milliSpan = GetMillisecondSpan(coordinatesModel.SelectedItem.Split(' ')[1].ToString(), coordinatesModel.SpanValue);
+            milliSpan = GetMillisecondSpan(mousePositionModel.SelectedItem.Split(' ')[1].ToString(), mousePositionModel.SpanValue);
             myThread = new System.Threading.Thread(delegate()
             {
                 Stopwatch sw = new Stopwatch();
@@ -73,26 +88,11 @@ namespace AutoClicker1.Service
             });
             myThread.Start();
         }
-        public bool CheckEditValues()
-        {
-            if (coordinatesModel.EditText == "Lock Bind")
-            {
-                coordinatesModel.EditText = "Edit Text";
-                coordinatesModel.IsEnabled = false;
-                return false;
-            }
-            else
-            {
-                coordinatesModel.EditText = "Lock Bind";
-                coordinatesModel.IsEnabled = true;
-                return true;
-            }
-        }
         public void CheckClickRequirement(double milliSecondSpan, Stopwatch sw)
         {
             Thread.Sleep((int)milliSecondSpan);
-            MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftDown, int.Parse(coordinatesModel.X), int.Parse(coordinatesModel.Y));
-            MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp, int.Parse(coordinatesModel.X), int.Parse(coordinatesModel.Y));
+            MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftDown);
+            MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp);
             sw.Stop();
             sw.Reset();
             sw.Start();

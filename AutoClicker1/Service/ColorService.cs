@@ -2,6 +2,7 @@
 using AutoClicker1.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -17,6 +18,12 @@ namespace AutoClicker1.Service
     public class ColorService
     {
         Thread myThread;
+        int totalColorTime = 0;
+        int totalColorIterations = 0;
+        int totalCursorTime = 0;
+        int totalCursorIterations = 0;
+        int totalConverts = 0;
+        int totalConvertIterations = 0;
         bool killThread = false;
         bool threadStarted = false;
         bool _shouldStop;
@@ -60,12 +67,24 @@ namespace AutoClicker1.Service
         
         static public System.Drawing.Color GetPixelColor(int x, int y)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             IntPtr hdc = GetDC(IntPtr.Zero);
+            sw.Stop();
+            sw.Reset();
+            sw.Start();
             uint pixel = GetPixel(hdc, x, y);
+            sw.Stop();
+            sw.Reset();
+            sw.Start();
             ReleaseDC(IntPtr.Zero, hdc);
+            sw.Stop();
+            sw.Reset();
+            sw.Start();
             System.Drawing.Color color = System.Drawing.Color.FromArgb((int)(pixel & 0x000000FF),
                          (int)(pixel & 0x0000FF00) >> 8,
                          (int)(pixel & 0x00FF0000) >> 16);
+            sw.Stop();
             return color;
         }
         public void CheckKeyPress()
@@ -82,6 +101,7 @@ namespace AutoClicker1.Service
             }
             else
             {
+                WriteToFile();
                 killThread = true;
                 threadStarted = false;
                 myThread.Abort();
@@ -140,15 +160,37 @@ namespace AutoClicker1.Service
         {
                 foreach (ListBoxBinder ls in ls2)
                 {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
                     System.Drawing.Point p = MouseHook.GetCursorPosition();
+                    sw.Stop();
+                    totalCursorIterations++;
+                    totalCursorTime += (int)sw.ElapsedMilliseconds;
+                    sw.Reset();
+                    sw.Start();
                     System.Drawing.Color c = GetPixelColor(p.X, p.Y);
+                    sw.Stop();
+                    totalColorIterations++;
+                    totalColorTime += (int)sw.ElapsedMilliseconds;
+                    sw.Reset();
+                    sw.Start();
                     System.Windows.Media.Color newColor = System.Windows.Media.Color.FromArgb(c.A, c.R, c.G, c.B);
+                    sw.Stop();
+                    totalConvertIterations++;
+                    totalConverts += (int)sw.ElapsedMilliseconds;
                     if (ls.Content == newColor.ToString())
                     {
+                        Thread.Sleep(30);
                         MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftDown);
                         MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp);
                     }
                 }
+        }
+        public void WriteToFile()
+        {
+            int avgCursor = totalCursorTime / totalCursorIterations;
+            int avgColor = totalColorTime / totalColorIterations;
+            int avgConvert = totalConverts / totalConvertIterations;
         }
 
 
